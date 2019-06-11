@@ -1,7 +1,11 @@
 const defaultState = {
   currentUser: null,
   tracks: [],
-  recentlyPlayedTracks: []
+  recentlyPlayedTracks: [],
+  topTracks: [],
+  genres: [],
+  artists: [],
+  reviews: []
 }
 
 
@@ -18,6 +22,14 @@ function reducer(state=defaultState, action){
       return {...state, tracks: filteredArr}
     case "SET_RECENTLY_PLAYED_TRACKS":
       return {...state, recentlyPlayedTracks: action.payload}
+    case "SET_GENRES":
+      return {...state, genres: action.payload}
+    case "SET_ARTISTS":
+      return {...state, artists: action.payload}
+    case "SET_REVIEWS":
+      return {...state, reviews: action.payload}
+    case "ADD_REVIEW":
+      return {...state, reviews: [...state.reviews, action.payload]}
     default:
       return state
   }

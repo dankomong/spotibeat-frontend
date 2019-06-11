@@ -4,13 +4,13 @@
 
 .track {
   position: relative;
-
 }
 
 .track:hover .img-description {
   visibility: visible;
   opacity: 1;
 }
+
 
 .img-description {
   position: absolute;
@@ -21,15 +21,35 @@
   background: rgba(29, 106, 154, 0.72);
   color: #fff;
   visibility: hidden;
-  padding-top: 120px;
+  padding-top: 100px;
   opacity: 0;
 
   /* transition effect. not necessary */
   transition: opacity .2s, visibility .2s;
 }
 
+.container {
+  margin-top: -20px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.review-btn-box {
+  margin-top: 30px;
+}
+
 #remove-btn {
   position: absolute;
   top: 8px;
   right: 5px;
+}
+
+#back-button {
+  position: absolute;
+  top: 8px;
+  left: 5px;
+}
+
+.track-btns {
+  margin-bottom: 30px;
 }

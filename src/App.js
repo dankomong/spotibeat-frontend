@@ -7,6 +7,9 @@ import Login from './components/Login';
 import HomeContainer from './components/HomeContainer';
 import Navbar from './components/Navbar';
 import TrackContainer from './components/TrackContainer'
+import LibraryContainer from './components/LibraryContainer'
+import ProfileContainer from './components/ProfileContainer'
+import ReviewsContainer from './components/ReviewsContainer'
 
 // Getting the code from the query params
 const queryString = require('query-string');
@@ -48,6 +51,13 @@ class App extends Component {
       })
     }
 
+    // fetch to get genres and artists
+    fetch('http://localhost:3001/api/v1//get-genres-and-artists').then(res => res.json())
+      .then(parsedRes => {
+        this.props.setGenres(parsedRes.genres)
+        this.props.setArtists(parsedRes.artists)
+      })
+
   }
 
   parsedCode = () => {
@@ -56,16 +66,18 @@ class App extends Component {
 
   render() {
     console.log('CURRENT USER', this.props.currentUser)
+    console.log('revieww', this.props.reviews);
     return (
       <div className="App">
           {this.props.currentUser ?
             <div>
-              <Navbar/>
+              <Navbar path={this.props.location.pathname}/>
                 <Switch>
                   <Route exact path="/home" render={(routerProps) => <HomeContainer {...routerProps} />} />
-                  <Route exact path="/playlists" render={(routerProps) => <div>Playlists</div>} />
-                  <Route exact path="/library" render={(routerProps) => <div>Library</div>} />
+                  <Route exact path="/profile" render={(routerProps) => <ProfileContainer {...routerProps} />} />
+                  <Route exact path="/library" render={(routerProps) => <LibraryContainer {...routerProps} />} />
                   <Route exact path="/tracks" render={(routerProps) => <TrackContainer {...routerProps} />} />
+                  <Route exact path="/reviews" render={(routerProps) => <ReviewsContainer {...routerProps} />} />
                 </Switch>
             </div> :
             <Route exact path="/login" render={(routerProps) => <Login {...routerProps}/>}/>
@@ -77,14 +89,21 @@ class App extends Component {
 } // end of class
 
 function mapStateToProps(state) {
-  return {currentUser: state.currentUser}
+  return {currentUser: state.currentUser, reviews: state.reviews}
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     setCurrentUser: (user) => {
       dispatch({type: "SET_CURRENT_USER", payload: user})
-  }}
+    },
+    setGenres: (genres) => {
+      dispatch({type: "SET_GENRES", payload: genres})
+    },
+    setArtists: (artists) => {
+      dispatch({type: "SET_ARTISTS", payload: artists})
+    }
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
