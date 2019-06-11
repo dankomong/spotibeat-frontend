@@ -1,0 +1,35 @@
+#track-container {
+  background-color: #3a3c3f;
+}
+
+.track {
+  position: relative;
+
+}
+
+.track:hover .img-description {
+  visibility: visible;
+  opacity: 1;
+}
+
+.img-description {
+  position: absolute;
+  top: 0px;
+  bottom: 3px;
+  left: 0;
+  right: 0;
+  background: rgba(29, 106, 154, 0.72);
+  color: #fff;
+  visibility: hidden;
+  padding-top: 120px;
+  opacity: 0;
+
+  /* transition effect. not necessary */
+  transition: opacity .2s, visibility .2s;
+}
+
+#remove-btn {
+  position: absolute;
+  top: 8px;
+  right: 5px;
+}

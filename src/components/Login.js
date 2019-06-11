@@ -10,20 +10,18 @@ const theme = createMuiTheme({
   palette: {
     primary: green,
   },
-
 });
 
 class Login extends Component {
-
 
   render() {
     return (
       <header>
         <div className="header-content">
-           <h1 class="header-title animate-pop-in">Spotifyzer</h1>
+           <h1 className="header-title animate-pop-in">Spotibeats</h1>
            <ThemeProvider theme={theme}>
              <Fab variant="extended" href="http://localhost:3001/api/v1/login" id="log-in-btn" size="large" color="primary" className="header-button animate-pop-in" aria-label="Delete">
-                <i class="fa fa-spotify"></i>
+                <i className="fa fa-spotify"></i>
                 Login with Spotify
              </Fab>
           </ThemeProvider>
@@ -33,7 +31,4 @@ class Login extends Component {
   }
 }
 
-// <a href="http://localhost:3001/api/v1/login">
-// Log in to Spotify
-// </a>
 export default Login
