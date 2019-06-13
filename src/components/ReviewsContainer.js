@@ -7,9 +7,10 @@ class ReviewsContainer extends Component {
 
   renderReviews = () => {
     return this.props.reviews.map(review => {
+      console.log('review', review)
       let track = this.props.tracks.find(track => track.id === review.track.id)
 
-      return <Review key={review.track.id} description={review.description} track={track}/>
+      return <Review key={"review" + review.id} description={review.description} track={track}/>
     })
   }
 

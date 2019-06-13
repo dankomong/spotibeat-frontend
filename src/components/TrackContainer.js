@@ -9,14 +9,13 @@ import Track from './Track'
 class TrackContainer extends Component {
 
   state = {
-    loading: true,
     active: "All Tracks"
   }
 
   renderAllTracks = () => {
     return this.props.tracks.map(track => {
 
-      return <Track key={track.id} img_url={track.album.image_url_medium} {...track} />
+      return <Track key={"track" + track.id} img_url={track.album.image_url_medium} {...track} />
     })
   }
 
@@ -24,13 +23,13 @@ class TrackContainer extends Component {
     return this.props.recentlyPlayedTracks.items.map((item, index) => {
       // using index as the key for this one because there can be some recently played tracks
       // that have the same id from the user's saved tracks, resulting in duplicate ids.
-      return <Track key={index} img_url={item.track.album.images[1].url} artists={item.track.artists} name={item.track.name} />
+      return <Track key={"recent-tracks" + index} img_url={item.track.album.images[1].url} artists={item.track.artists} name={item.track.name} />
     })
   }
 
-  renderTopTracks = () => {
-
-  }
+  // renderTopTracks = () => {
+  //
+  // }
 
   handleRenderTracks = (e) => {
     console.log("eee", e.target.innerText)
@@ -56,18 +55,8 @@ class TrackContainer extends Component {
     }
   }
 
-  componentDidMount() {
-    fetch('http://localhost:3001/api/v1/all-track-features').then(res => res.json())
-      .then(parsedRes => {
-        console.log('RES',parsedRes)
-        this.props.setTracks(parsedRes.tracks)
-        this.props.setRecentlyPlayedTracks(parsedRes.recent_tracks)
-        this.setState({
-          loading: false
-        })
-      })
 
-  }
+
 
   render() {
     console.log('FUCK', this.props.tracks)
@@ -81,13 +70,9 @@ class TrackContainer extends Component {
             Recently Played
           </Button>
         </div>
-        {this.state.loading ?
-          <Dimmer active>
-            <Loader content='Loading' />
-          </Dimmer> :
           <Fragment>
             {this.renderSwitch(this.state.active)}
-          </Fragment>}
+          </Fragment>
       </div>
     )
   }
@@ -97,15 +82,4 @@ function mapStateToProps(state) {
   return {tracks: state.tracks, recentlyPlayedTracks: state.recentlyPlayedTracks}
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    setTracks: (tracks) => {
-      dispatch({type: "SET_TRACKS", payload: tracks})
-    },
-    setRecentlyPlayedTracks: (tracks) => {
-      dispatch({type: "SET_RECENTLY_PLAYED_TRACKS", payload: tracks})
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TrackContainer)
+export default connect(mapStateToProps)(TrackContainer)

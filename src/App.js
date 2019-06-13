@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom';
+import { Dimmer, Loader } from 'semantic-ui-react'
 import Login from './components/Login';
 import HomeContainer from './components/HomeContainer';
 import Navbar from './components/Navbar';
@@ -16,6 +17,49 @@ const queryString = require('query-string');
 let parsed = null;
 
 class App extends Component {
+
+  state = {
+    loading: true,
+    playing: false
+  }
+
+  playerCheckInterval = null;
+
+  checkForPlayer = () => {
+    const token = localStorage.getItem("token")
+    if (window.Spotify !== null) {
+      clearInterval(this.playerCheckInterval);
+      this.player = new window.Spotify.Player({
+        name: "Danko's Spotify Player",
+        getOAuthToken: cb => { cb(token); },
+      });
+      this.createEventHandlers();
+
+      // finally, connect!
+      this.player.connect();
+    }
+  }
+
+  createEventHandlers() {
+    this.player.on('initialization_error', e => { console.error("initialization_error", e); });
+    this.player.on('authentication_error', e => {
+      console.error("authentication_error", e);
+
+    });
+    this.player.on('account_error', e => { console.error("account_error", e); });
+    this.player.on('playback_error', e => { console.error("playback error", e); });
+
+    // Playback status updates
+    this.player.on('player_state_changed', state => { console.log(state); });
+
+    // Ready
+    this.player.on('ready', data => {
+      let { device_id } = data;
+      console.log("Let the music play on!");
+      this.setState({ deviceId: device_id });
+    });
+  }
+
 
   componentDidMount() {
     console.log("code: ", this.parsedCode())
@@ -32,6 +76,11 @@ class App extends Component {
           access_token: accessToken
         })
       }).then(res => res.json()).then(parsedRes => {
+        // Spotify SDK
+        this.checkForPlayer()
+        this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
+        //
+
         this.props.setCurrentUser(parsedRes.user)
       })
     } else if(this.parsedCode().code){
@@ -47,6 +96,12 @@ class App extends Component {
       }).then(res => res.json()).then(parsedRes => {
         console.log('ACCESS TOKEN', parsedRes)
         localStorage.setItem("token", parsedRes.token)
+
+        // Spotify SDK
+        this.checkForPlayer()
+        this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
+        //
+
         this.props.setCurrentUser(parsedRes.user)
       })
     }
@@ -58,10 +113,33 @@ class App extends Component {
         this.props.setArtists(parsedRes.artists)
       })
 
+    // fetch to get Tracks
+    fetch('http://localhost:3001/api/v1/all-track-features').then(res => res.json())
+       .then(parsedRes => {
+         console.log('RES',parsedRes)
+         this.props.setTracks(parsedRes.tracks)
+         this.props.setRecentlyPlayedTracks(parsedRes.recent_tracks)
+         this.setState({
+           loading: false
+         })
+       })
+
   }
 
   parsedCode = () => {
     return queryString.parse(this.props.location.search);
+  }
+
+  onPrevClick() {
+    this.player.previousTrack();
+  }
+
+  onPlayClick() {
+    this.player.togglePlay();
+  }
+
+  onNextClick() {
+    this.player.nextTrack();
   }
 
   render() {
@@ -73,7 +151,10 @@ class App extends Component {
             <div>
               <Navbar path={this.props.location.pathname}/>
                 <Switch>
-                  <Route exact path="/home" render={(routerProps) => <HomeContainer {...routerProps} />} />
+                  {this.state.loading ?
+                    <Dimmer active>
+                    <Loader content='Loading' />
+                  </Dimmer> : <Route exact path="/home" render={(routerProps) => <HomeContainer {...routerProps} />} />}
                   <Route exact path="/profile" render={(routerProps) => <ProfileContainer {...routerProps} />} />
                   <Route exact path="/library" render={(routerProps) => <LibraryContainer {...routerProps} />} />
                   <Route exact path="/tracks" render={(routerProps) => <TrackContainer {...routerProps} />} />
@@ -82,6 +163,7 @@ class App extends Component {
             </div> :
             <Route exact path="/login" render={(routerProps) => <Login {...routerProps}/>}/>
           }
+      
       </div>
     )
   }
@@ -102,6 +184,12 @@ function mapDispatchToProps(dispatch) {
     },
     setArtists: (artists) => {
       dispatch({type: "SET_ARTISTS", payload: artists})
+    },
+    setTracks: (tracks) => {
+      dispatch({type: "SET_TRACKS", payload: tracks})
+    },
+    setRecentlyPlayedTracks: (tracks) => {
+      dispatch({type: "SET_RECENTLY_PLAYED_TRACKS", payload: tracks})
     }
   }
 }
