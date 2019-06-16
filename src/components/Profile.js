@@ -57,10 +57,10 @@ class Profile extends Component {
               <h1>{this.props.currentUser.tracks.length}</h1>
             </Grid.Column>
             <Grid.Column>
-              <h1>{this.props.genres.length}</h1>
+              <h1>{this.props.artists.length}</h1>
             </Grid.Column>
             <Grid.Column>
-              <h1>{this.props.artists.length}</h1>
+              <h1>{this.props.genres.length}</h1>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>

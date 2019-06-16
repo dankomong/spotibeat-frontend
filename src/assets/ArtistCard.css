@@ -1,0 +1,60 @@
+.artist-box {
+  position: relative;
+  margin-bottom: 50px;
+}
+
+.artist-number {
+  display: inline-block;
+}
+
+.artist-card-image {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+}
+
+.artist-card-image:hover {
+  cursor: pointer;
+}
+
+.artist-name {
+  display: inline-block;
+}
+
+.artist-description {
+  position: absolute;
+  top: 0px;
+  bottom: 3px;
+  left: 0;
+  right: 0;
+  color: #fff;
+  padding-top: 100px;
+  opacity: 1;
+  visibility: visible;
+}
+
+.artist-show-box {
+  position: fixed;
+}
+
+.up {
+  top: 100px;
+  animation: rise 0.8s ease forwards;
+}
+
+@keyframes rise {
+  to { transform: translateY(-100px);}
+}
+.top {
+  top: 0px;
+  animation: fall 0.8s ease forwards;
+
+}
+@keyframes fall {
+  to { transform: translateY(100px);}
+}
+
+.player-box {
+  overflow: auto;
+  height: 21vw;
+}

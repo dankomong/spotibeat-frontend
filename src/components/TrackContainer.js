@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import StackGrid from "react-stack-grid";
 import { connect } from 'react-redux'
-import { Button, Dimmer, Loader } from 'semantic-ui-react'
+import { Button, Dimmer, Loader, Sticky } from 'semantic-ui-react'
 import '../assets/Track.css'
+import SpotifyPlayer from 'react-spotify-player';
 
 import Track from './Track'
 
@@ -23,7 +24,8 @@ class TrackContainer extends Component {
     return this.props.recentlyPlayedTracks.items.map((item, index) => {
       // using index as the key for this one because there can be some recently played tracks
       // that have the same id from the user's saved tracks, resulting in duplicate ids.
-      return <Track key={"recent-tracks" + index} img_url={item.track.album.images[1].url} artists={item.track.artists} name={item.track.name} />
+      console.log('item', item)
+      return <Track key={"recent-tracks" + index} spotify_url={item.track.external_urls.spotify} recent={true} img_url={item.track.album.images[1].url} artists={item.track.artists} name={item.track.name} />
     })
   }
 
@@ -59,7 +61,13 @@ class TrackContainer extends Component {
 
 
   render() {
-    console.log('FUCK', this.props.tracks)
+    console.log('FUCK', this.props)
+    const size = {
+      width: '100%',
+      height: 300,
+    };
+    const view = 'list'; // or 'coverart'
+    const theme = 'black'; // or 'white'
     return (
       <div id="track-container">
         <div className="track-btns">
@@ -70,16 +78,22 @@ class TrackContainer extends Component {
             Recently Played
           </Button>
         </div>
+          <div className="player-container">
+            <iframe src={this.props.url.split("/track/").join("/embed/track/")} width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+          </div>
+
           <Fragment>
             {this.renderSwitch(this.state.active)}
           </Fragment>
+
+
       </div>
     )
   }
 }
 
 function mapStateToProps(state) {
-  return {tracks: state.tracks, recentlyPlayedTracks: state.recentlyPlayedTracks}
+  return {tracks: state.tracks, recentlyPlayedTracks: state.recentlyPlayedTracks, url: state.currentTrackURL}
 }
 
 export default connect(mapStateToProps)(TrackContainer)

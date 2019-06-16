@@ -7,7 +7,7 @@ class Track extends Component {
 
   state = {
     writeReviewClicked: false,
-    description: ''
+    description: '',
   }
 
   handleReviewClicked = () => {
@@ -40,6 +40,10 @@ class Track extends Component {
     })
   }
 
+  playTrack = (url) => {
+    this.props.setURI(url);
+  }
+
   postReview = () => {
     fetch('http://localhost:3001/api/v1/review', {
       method: 'POST',
@@ -57,7 +61,7 @@ class Track extends Component {
   }
 
   render() {
-    //console.log('props.tracks', this.props);
+  //console.log('props.tracks', this.props);
     return (
       /* <a href={this.props.spotify_url} target="_blank"> */
         <div className="track">
@@ -96,6 +100,9 @@ class Track extends Component {
                 </Button>
                 <div className="review-btn-box">
                   <Button inverted color="teal" onClick={this.handleReviewClicked}>Write a review</Button>
+                  <Button color="green" icon onClick={() => this.playTrack(this.props.spotify_url)}>
+                    <Icon name='play circle' />
+                  </Button>
                 </div>
               </div> </Fragment>}
         </div>
@@ -104,6 +111,7 @@ class Track extends Component {
   }
 }
 
+
 function mapDispatchToProps(dispatch) {
   return {
     removeTrack: (track) => {
@@ -111,6 +119,9 @@ function mapDispatchToProps(dispatch) {
     },
     addReview: (review) => {
       dispatch({type: "ADD_REVIEW", payload: review})
+    },
+    setURI: (url) => {
+      dispatch({type: "SET_URI", payload: url})
     }
   }
 }

@@ -31,9 +31,9 @@ class Home extends Component {
          />
          <Menu.Item
            as={ Link }
-           name='/library'
-           to='/library'
-           active={activeItem === '/library'}
+           name='/artists'
+           to='/artists'
+           active={activeItem === '/artists'}
            onClick={this.handleItemClick}
          />
          <Menu.Item

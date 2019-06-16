@@ -5,7 +5,8 @@ const defaultState = {
   topTracks: [],
   genres: [],
   artists: [],
-  reviews: []
+  reviews: [],
+  currentTrackURL: "",
 }
 
 
@@ -30,6 +31,8 @@ function reducer(state=defaultState, action){
       return {...state, reviews: action.payload}
     case "ADD_REVIEW":
       return {...state, reviews: [...state.reviews, action.payload]}
+    case "SET_URI":
+      return {...state, currentTrackURL: action.payload}
     default:
       return state
   }

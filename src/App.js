@@ -20,25 +20,25 @@ class App extends Component {
 
   state = {
     loading: true,
-    playing: false
+    // playing: false
   }
 
-  playerCheckInterval = null;
+  // playerCheckInterval = null;
 
-  checkForPlayer = () => {
-    const token = localStorage.getItem("token")
-    if (window.Spotify !== null) {
-      clearInterval(this.playerCheckInterval);
-      this.player = new window.Spotify.Player({
-        name: "Danko's Spotify Player",
-        getOAuthToken: cb => { cb(token); },
-      });
-      this.createEventHandlers();
-
-      // finally, connect!
-      this.player.connect();
-    }
-  }
+  // checkForPlayer = () => {
+  //   const token = localStorage.getItem("token")
+  //   if (window.Spotify !== null) {
+  //     clearInterval(this.playerCheckInterval);
+  //     this.player = new window.Spotify.Player({
+  //       name: "Danko's Spotify Player",
+  //       getOAuthToken: cb => { cb(token); },
+  //     });
+  //     this.createEventHandlers();
+  //
+  //     // finally, connect!
+  //     this.player.connect();
+  //   }
+  // }
 
   createEventHandlers() {
     this.player.on('initialization_error', e => { console.error("initialization_error", e); });
@@ -76,9 +76,10 @@ class App extends Component {
           access_token: accessToken
         })
       }).then(res => res.json()).then(parsedRes => {
+
         // Spotify SDK
-        this.checkForPlayer()
-        this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
+        // this.checkForPlayer()
+        // this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
         //
 
         this.props.setCurrentUser(parsedRes.user)
@@ -98,8 +99,8 @@ class App extends Component {
         localStorage.setItem("token", parsedRes.token)
 
         // Spotify SDK
-        this.checkForPlayer()
-        this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
+        // this.checkForPlayer()
+        // this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
         //
 
         this.props.setCurrentUser(parsedRes.user)
@@ -144,7 +145,7 @@ class App extends Component {
 
   render() {
     console.log('CURRENT USER', this.props.currentUser)
-    console.log('revieww', this.props.reviews);
+    //console.log('artist', this.props.artists);
     return (
       <div className="App">
           {this.props.currentUser ?
@@ -156,14 +157,14 @@ class App extends Component {
                     <Loader content='Loading' />
                   </Dimmer> : <Route exact path="/home" render={(routerProps) => <HomeContainer {...routerProps} />} />}
                   <Route exact path="/profile" render={(routerProps) => <ProfileContainer {...routerProps} />} />
-                  <Route exact path="/library" render={(routerProps) => <LibraryContainer {...routerProps} />} />
+                  <Route exact path="/artists" render={(routerProps) => <LibraryContainer {...routerProps} />} />
                   <Route exact path="/tracks" render={(routerProps) => <TrackContainer {...routerProps} />} />
                   <Route exact path="/reviews" render={(routerProps) => <ReviewsContainer {...routerProps} />} />
                 </Switch>
             </div> :
             <Route exact path="/login" render={(routerProps) => <Login {...routerProps}/>}/>
           }
-      
+
       </div>
     )
   }
@@ -171,7 +172,7 @@ class App extends Component {
 } // end of class
 
 function mapStateToProps(state) {
-  return {currentUser: state.currentUser, reviews: state.reviews}
+  return {currentUser: state.currentUser, reviews: state.reviews, artists: state.artists}
 }
 
 function mapDispatchToProps(dispatch) {

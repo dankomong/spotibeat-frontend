@@ -34,6 +34,13 @@
   margin-right: 40px;
 }
 
+.player-container {
+  position: fixed;
+  width: 100%;
+  bottom: -4px;
+  z-index: 9999;
+}
+
 .review-btn-box {
   margin-top: 30px;
 }
