@@ -4,11 +4,11 @@ import Slider from "react-slick";
 import Album from './Album';
 import '../assets/HomeContainer.css'
 
-class HomeCarousel extends Component {
+class RecommendationsCarousel extends Component {
 
-  renderNewReleases = () => {
-    return this.props.new_releases.map((item, index) => {
-      return <Album key={"new-releases" + index} img_url={item.images[1].url} artists={item.artists} name={item.name} album_type={item.album_type} />
+  renderNewRecommendations = () => {
+    return this.props.recommendations.map((rec, index) => {
+      return <Album key={"recs" + index} img_url={rec.album.images[1].url} artists={rec.album.artists} name={rec.album.name} album_type={rec.album.album_type} />
     })
   }
 
@@ -24,9 +24,9 @@ class HomeCarousel extends Component {
     };
     return (
       <div className="carousel">
-        <h1> New Releases (30) </h1>
+        <h1> New Recommendations (30) </h1>
         <Slider {...settings}>
-          {this.renderNewReleases()}
+          {this.renderNewRecommendations()}
         </Slider>
       </div>
     )
@@ -34,7 +34,7 @@ class HomeCarousel extends Component {
 }
 
 function mapStateToProps(state) {
-  return {new_releases: state.new_releases}
+  return {recommendations: state.recommendations}
 }
 
-export default connect(mapStateToProps)(HomeCarousel)
+export default connect(mapStateToProps)(RecommendationsCarousel)

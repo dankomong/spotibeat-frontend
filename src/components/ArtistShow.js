@@ -11,7 +11,8 @@ class ArtistShow extends Component {
 
   renderSpotifyPlayers = () => {
     return this.props.currentTracks.map(track => {
-      return <SpotifyPlayer url={track.spotify_url} />
+      console.log('track', track)
+      return <SpotifyPlayer key={"spotifyplayer" + track.id} url={track.spotify_url} />
     })
   }
 

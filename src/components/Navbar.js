@@ -45,6 +45,13 @@ class Home extends Component {
          />
          <Menu.Item
            as={ Link }
+           name='/genres'
+           to='/genres'
+           active={activeItem === '/genres'}
+           onClick={this.handleItemClick}
+         />
+         <Menu.Item
+           as={ Link }
            name='/reviews'
            to='/reviews'
            active={activeItem === '/reviews'}

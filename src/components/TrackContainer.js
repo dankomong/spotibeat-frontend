@@ -78,9 +78,6 @@ class TrackContainer extends Component {
             Recently Played
           </Button>
         </div>
-          <div className="player-container">
-            <iframe src={this.props.url.split("/track/").join("/embed/track/")} width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-          </div>
 
           <Fragment>
             {this.renderSwitch(this.state.active)}

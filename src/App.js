@@ -11,6 +11,7 @@ import TrackContainer from './components/TrackContainer'
 import LibraryContainer from './components/LibraryContainer'
 import ProfileContainer from './components/ProfileContainer'
 import ReviewsContainer from './components/ReviewsContainer'
+import GenreContainer from './components/GenreContainer'
 
 // Getting the code from the query params
 const queryString = require('query-string');
@@ -144,7 +145,7 @@ class App extends Component {
   }
 
   render() {
-    console.log('CURRENT USER', this.props.currentUser)
+    console.log('CURRENT USER', this.props.genres)
     //console.log('artist', this.props.artists);
     return (
       <div className="App">
@@ -160,10 +161,14 @@ class App extends Component {
                   <Route exact path="/artists" render={(routerProps) => <LibraryContainer {...routerProps} />} />
                   <Route exact path="/tracks" render={(routerProps) => <TrackContainer {...routerProps} />} />
                   <Route exact path="/reviews" render={(routerProps) => <ReviewsContainer {...routerProps} />} />
+                  <Route exact path="/genres" render={(routerProps) => <GenreContainer {...routerProps} />} />
                 </Switch>
             </div> :
             <Route exact path="/login" render={(routerProps) => <Login {...routerProps}/>}/>
           }
+          <div className="player-container">
+            <iframe src={this.props.url.split("/track/").join("/embed/track/")} width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+          </div>
 
       </div>
     )
@@ -172,7 +177,7 @@ class App extends Component {
 } // end of class
 
 function mapStateToProps(state) {
-  return {currentUser: state.currentUser, reviews: state.reviews, artists: state.artists}
+  return {currentUser: state.currentUser, reviews: state.reviews, artists: state.artists, url: state.currentTrackURL, genres: state.genres}
 }
 
 function mapDispatchToProps(dispatch) {

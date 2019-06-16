@@ -1,0 +1,26 @@
+.album {
+  position: relative;
+}
+
+.album:hover .album-description {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+.album-description {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  background: rgba(29, 106, 154, 0.72);
+  color: #fff;
+  visibility: hidden;
+  padding-top: 100px;
+  opacity: 0;
+  
+
+  /* transition effect. not necessary */
+  transition: opacity .2s, visibility .2s;
+}
