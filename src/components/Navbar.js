@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Input, Menu, Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-
+import { connect } from 'react-redux'
 class Home extends Component {
   state = {
     activeItem: this.props.path
@@ -59,7 +59,7 @@ class Home extends Component {
          />
          <Menu.Menu position='right'>
           <Menu.Item>
-            <Input icon='search' placeholder='Search...' />
+            <Input icon='search' placeholder='Search...' onChange={(e) => this.props.handleChange(e.target.value)}/>
           </Menu.Item>
           <Menu.Item
             name='logout'
@@ -73,4 +73,11 @@ class Home extends Component {
   }
 }
 
-export default Home
+function mapDispatchToProps(dispatch) {
+  return {
+    handleChange: (val) => {
+      dispatch({type: 'SET_SEARCH', payload: val})
+    }
+  }
+}
+export default connect(null, mapDispatchToProps)(Home)

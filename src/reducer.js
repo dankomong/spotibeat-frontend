@@ -8,7 +8,9 @@ const defaultState = {
   reviews: [],
   currentTrackURL: "",
   new_releases: [],
-  recommendations: []
+  recommendations: [],
+  filterTerm: "",
+  playlists: []
 }
 
 
@@ -18,9 +20,11 @@ function reducer(state=defaultState, action){
       return {...state, currentUser: action.payload}
     case "SET_TRACKS":
       return {...state, tracks: action.payload}
+    case 'SET_SEARCH':
+      return {...state, filterTerm: action.payload}
     case "REMOVE_TRACK":
       let filteredArr = state.tracks.filter(track => {
-        return track.id !== action.payload
+        return track.spotify_id !== action.payload
       })
       return {...state, tracks: filteredArr}
     case "SET_RECENTLY_PLAYED_TRACKS":
@@ -31,6 +35,8 @@ function reducer(state=defaultState, action){
       return {...state, artists: action.payload}
     case "SET_REVIEWS":
       return {...state, reviews: action.payload}
+    case "SET_PLAYLISTS":
+      return {...state, playlists: action.payload}
     case "ADD_REVIEW":
       return {...state, reviews: [...state.reviews, action.payload]}
     case "SET_URI":

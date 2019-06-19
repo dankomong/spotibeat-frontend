@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import StackGrid from "react-stack-grid";
 import '../assets/Review.css'
 import Review from './Review'
 
@@ -27,7 +28,9 @@ class ReviewsContainer extends Component {
 
     return (
       <div id="review-container">
-        {this.renderReviews()}
+        <StackGrid columnWidth={300}>
+          {this.renderReviews()}
+        </StackGrid>
       </div>
     )
   }

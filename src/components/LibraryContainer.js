@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { Pie } from 'react-chartjs-2';
-import { Button, Grid } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 import StackGrid from "react-stack-grid";
 import { connect } from 'react-redux'
 import '../assets/Library.css'
@@ -66,7 +66,7 @@ class LibraryContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  return {artists: state.artists}
+  return {artists: state.artists.filter(a => a.name.toLowerCase().includes(state.filterTerm.toLowerCase()))}
 }
 
 export default connect(mapStateToProps)(LibraryContainer)

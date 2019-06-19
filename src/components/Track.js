@@ -61,7 +61,7 @@ class Track extends Component {
   }
 
   render() {
-  //console.log('props.tracks', this.props);
+  //console.log('tracks id', this.props.spotify_id);
     return (
       /* <a href={this.props.spotify_url} target="_blank"> */
         <div className="track">
@@ -95,7 +95,7 @@ class Track extends Component {
               <div className="img-description">
                 <h2>{this.props.name} </h2>
                 <p>{this.renderArtistNames()}</p>
-                <Button id="remove-btn" color="black" icon onClick={() => this.props.removeTrack(this.props.id)}>
+                <Button id="remove-btn" color="black" icon onClick={() => this.props.removeTrack(this.props.spotify_id)}>
                   <Icon name='minus' />
                 </Button>
                 <div className="review-btn-box">
@@ -114,8 +114,17 @@ class Track extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    removeTrack: (track) => {
-      dispatch({type: "REMOVE_TRACK", payload: track})
+    removeTrack: (id) => {
+      // delete request
+      fetch('http://localhost:3001/api/v1/track', {
+        method: 'DELETE',
+        headers: {
+          id
+        }
+      }).then(res => res.json()).then(response => {
+        console.log('dispatch remove', response)
+        dispatch({type: "REMOVE_TRACK", payload: id})
+      })
     },
     addReview: (review) => {
       dispatch({type: "ADD_REVIEW", payload: review})

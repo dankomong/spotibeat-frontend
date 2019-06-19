@@ -11,6 +11,9 @@
   opacity: 1;
 }
 
+.genre-name {
+  cursor: pointer;
+}
 
 .img-description {
   position: absolute;
@@ -37,6 +40,10 @@
 
 .review-btn-box {
   margin-top: 30px;
+}
+
+.track-name {
+  cursor: pointer;
 }
 
 #remove-btn {

@@ -8,7 +8,7 @@ class HomeCarousel extends Component {
 
   renderNewReleases = () => {
     return this.props.new_releases.map((item, index) => {
-      return <Album key={"new-releases" + index} img_url={item.images[1].url} artists={item.artists} name={item.name} album_type={item.album_type} />
+      return <Album key={"new-releases" + index} img_url={item.images[1].url} artists={item.artists} name={item.name} album_type={item.album_type} spotify_url={item.external_urls.spotify}/>
     })
   }
 
@@ -24,7 +24,7 @@ class HomeCarousel extends Component {
     };
     return (
       <div className="carousel">
-        <h1> New Releases (30) </h1>
+        <h1> New Releases </h1>
         <Slider {...settings}>
           {this.renderNewReleases()}
         </Slider>

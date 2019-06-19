@@ -85,6 +85,28 @@ class App extends Component {
 
         this.props.setCurrentUser(parsedRes.user)
       })
+
+      // fetch to get tracks, recent tracks, genres, and artists
+      fetch('http://localhost:3001/api/v1//get-tracks-genres-and-artists').then(res => res.json())
+        .then(parsedRes => {
+          this.setState({
+            loading: false
+          })
+          this.props.setTracks(parsedRes.tracks)
+          this.props.setRecentlyPlayedTracks(parsedRes.recent_tracks)
+          this.props.setGenres(parsedRes.genres)
+          this.props.setArtists(parsedRes.artists)
+        })
+
+      // // fetch to get Tracks
+      // fetch('http://localhost:3001/api/v1/all-track-features').then(res => res.json())
+      //    .then(parsedRes => {
+      //      console.log('RES',parsedRes)
+      //
+      //
+      //    })
+
+
     } else if(this.parsedCode().code){
       fetch('http://localhost:3001/api/v1/user', {
         method: 'POST',
@@ -108,23 +130,7 @@ class App extends Component {
       })
     }
 
-    // fetch to get genres and artists
-    fetch('http://localhost:3001/api/v1//get-genres-and-artists').then(res => res.json())
-      .then(parsedRes => {
-        this.props.setGenres(parsedRes.genres)
-        this.props.setArtists(parsedRes.artists)
-      })
 
-    // fetch to get Tracks
-    fetch('http://localhost:3001/api/v1/all-track-features').then(res => res.json())
-       .then(parsedRes => {
-         console.log('RES',parsedRes)
-         this.props.setTracks(parsedRes.tracks)
-         this.props.setRecentlyPlayedTracks(parsedRes.recent_tracks)
-         this.setState({
-           loading: false
-         })
-       })
 
   }
 
@@ -145,8 +151,8 @@ class App extends Component {
   }
 
   render() {
-    console.log('CURRENT USER', this.props.genres)
-    //console.log('artist', this.props.artists);
+    // console.log('APP')
+    console.log('genres from app.js', this.props.genres);
     return (
       <div className="App">
           {this.props.currentUser ?
@@ -166,9 +172,10 @@ class App extends Component {
             </div> :
             <Route exact path="/login" render={(routerProps) => <Login {...routerProps}/>}/>
           }
-          <div className="player-container">
+          {this.props.url === "" ? null :<div className="player-container">
             <iframe src={this.props.url.split("/track/").join("/embed/track/")} width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-          </div>
+          </div>}
+
 
       </div>
     )

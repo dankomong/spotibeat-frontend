@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import HomeCarousel from './HomeCarousel'
 import RecommendationsCarousel from './RecommendationsCarousel'
+import FeaturedPlaylists from './FeaturedPlaylists'
 import '../assets/HomeContainer.css'
 
 class Home extends Component {
@@ -20,21 +21,29 @@ class Home extends Component {
         this.props.setRecommendations(parsedRes.tracks)
       })
 
+    fetch('http://localhost:3001/api/v1/playlists').then(res => res.json())
+      .then(parsedRes => {
+        // console.log('playlists res', parsedRes.playlists.playlists.items)
+        this.props.setPlaylists(parsedRes.playlists.playlists.items)
+      })
+
   }
 
   render() {
-    console.log("recs", this.props.recs)
+    // console.log("playlists", this.props.playlists)
+    // console.log("new releases", this.props.new_releases);
     return (
       <div id="home-container">
         <HomeCarousel />
         <RecommendationsCarousel />
+        <FeaturedPlaylists />
       </div>
     )
   }
 }
 
 function mapStateToProps(state) {
-  return {new_releases: state.new_releases, recs: state.recommendations}
+  return {new_releases: state.new_releases, recs: state.recommendations, playlists: state.playlists}
 }
 
 function mapDispatchToProps(dispatch) {
@@ -44,6 +53,9 @@ function mapDispatchToProps(dispatch) {
     },
     setRecommendations: (recs) => {
       dispatch({type: 'SET_RECOMMENDATIONS', payload: recs})
+    },
+    setPlaylists: (playlists) => {
+      dispatch({type: 'SET_PLAYLISTS', payload: playlists})
     }
   }
 }

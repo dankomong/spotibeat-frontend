@@ -26,12 +26,15 @@ class Profile extends Component {
     }
   }
 
-
+  fetchLibrary = () => {
+    fetch("http://localhost:3001/api/v1/get-library")
+  }
 
   render() {
     console.log('profile', this.props)
     return (
       <div className="profile-content animate-pop-in">
+        <button onClick={this.fetchLibrary}> Update Library </button>
         <h1>Profile</h1>
         <a href={this.props.currentUser.spotify_url} target="_blank">
           <img className="profile-pic" src={this.props.currentUser.profile_img_url} alt="profile pic" />

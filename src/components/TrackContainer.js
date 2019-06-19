@@ -90,7 +90,11 @@ class TrackContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  return {tracks: state.tracks, recentlyPlayedTracks: state.recentlyPlayedTracks, url: state.currentTrackURL}
+  // try {
+    return {tracks: state.tracks.filter(t => t.name.toLowerCase().includes(state.filterTerm.toLowerCase())), recentlyPlayedTracks: state.recentlyPlayedTracks, url: state.currentTrackURL}
+  // } catch {
+  //   debugger
+  // }
 }
 
 export default connect(mapStateToProps)(TrackContainer)

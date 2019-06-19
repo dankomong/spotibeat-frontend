@@ -8,7 +8,7 @@ class RecommendationsCarousel extends Component {
 
   renderNewRecommendations = () => {
     return this.props.recommendations.map((rec, index) => {
-      return <Album key={"recs" + index} img_url={rec.album.images[1].url} artists={rec.album.artists} name={rec.album.name} album_type={rec.album.album_type} />
+      return <Album key={"recs" + index} img_url={rec.album.images[1].url} artists={rec.album.artists} name={rec.album.name} album_type={rec.album.album_type} spotify_url={rec.album.external_urls.spotify}/>
     })
   }
 
@@ -24,7 +24,7 @@ class RecommendationsCarousel extends Component {
     };
     return (
       <div className="carousel">
-        <h1> New Recommendations (30) </h1>
+        <h1> New Recommendations </h1>
         <Slider {...settings}>
           {this.renderNewRecommendations()}
         </Slider>

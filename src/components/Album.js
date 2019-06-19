@@ -22,15 +22,17 @@ class Album extends Component {
   }
 
   render() {
-
+    //console.log('album props', this.props);
     return (
       <div className="album">
         <img src={this.props.img_url} alt={this.props.name} />
-          <div className="album-description">
-            <h2>{this.props.name}</h2>
-            <h4>{this.renderArtistNames()}</h4>
-            <p> {this.capitalizeFirstLetter(this.props.album_type)} </p>
-          </div>
+          <a href={this.props.spotify_url} target="_blank">
+            <div className="album-description">
+              <h2>{this.props.name}</h2>
+              <h4>{this.renderArtistNames()}</h4>
+              <p> {this.capitalizeFirstLetter(this.props.album_type)} </p>
+            </div>
+          </a>
       </div>
     )
   }

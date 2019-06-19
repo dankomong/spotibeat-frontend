@@ -1,14 +1,14 @@
-.album {
+.playlist {
   position: relative;
 }
 
-.album:hover .album-description {
+.playlist:hover .playlist-description {
   visibility: visible;
   opacity: 1;
 }
 
 
-.album-description {
+.playlist-description {
   position: absolute;
   top: 0px;
   bottom: 0px;

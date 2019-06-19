@@ -32,7 +32,7 @@ class ArtistShow extends Component {
     console.log("artistcard", this.props);
     return (
       <div className={"artist-show-box " + this.state.className}>
-        <img src={this.props.currentImage} alt={this.props.currentName}/>
+        <img className="artist-pic" src={this.props.currentImage} alt={this.props.currentName}/>
         <h2>{this.props.currentName}</h2>
         <div className="player-box">
           {this.renderSpotifyPlayers()}

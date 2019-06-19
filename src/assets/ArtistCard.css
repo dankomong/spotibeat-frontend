@@ -37,6 +37,10 @@
   position: fixed;
 }
 
+.artist-pic {
+  margin-bottom: -20px;
+}
+
 .up {
   top: 100px;
   animation: rise 0.8s ease forwards;
@@ -56,5 +60,5 @@
 
 .player-box {
   overflow: auto;
-  height: 21vw;
+  height: 27vw;
 }
