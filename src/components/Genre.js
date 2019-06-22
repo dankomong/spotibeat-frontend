@@ -31,7 +31,7 @@ class Genre extends Component {
     let rand = Math.floor(Math.random() * Math.floor(9));
     return (
       <div className="genre">
-        <h2 style={{color: colors[rand]}} className="genre-name" onClick={() => this.props.selectGenres(this.props.artists, this.props.tracks)}>{this.capitalizeFirstLetter(this.props.name)}</h2>
+        <h2 style={{color: colors[rand]}} className="genre-name" onClick={() => this.props.selectGenres(this.props.artists, this.props.tracks, this.capitalizeFirstLetter(this.props.name), colors[rand])}>{this.capitalizeFirstLetter(this.props.name)}</h2>
 
       </div>
     )

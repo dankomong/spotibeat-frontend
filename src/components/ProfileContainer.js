@@ -8,7 +8,9 @@ class ProfileContainer extends Component {
   render() {
     console.log(this.props)
     return (
-      <Profile />
+      <div className="profile-container">
+        <Profile />
+      </div>
     )
   }
 }

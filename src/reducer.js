@@ -45,6 +45,8 @@ function reducer(state=defaultState, action){
       return {...state, new_releases: action.payload}
     case "SET_RECOMMENDATIONS":
       return {...state, recommendations: action.payload}
+    case 'REMOVE_USER':
+      return {...state, currentUser: null}
     default:
       return state
   }

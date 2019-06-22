@@ -12,20 +12,23 @@ class GenreContainer extends Component {
   state = {
     clicked: false,
     currentArtists: [],
-    currentTracks: []
+    currentTracks: [],
+    currentGenre: '',
+    genreColor: ''
   }
 
   renderGenres = () => {
     return this.props.genres.map(genre => {
-      //console.log('GENRE', genre)
       return <Genre key={genre.name} selectGenres={this.selectGenres} name={genre.name} tracks={genre.tracks} artists={genre.artists}/>
     })
   }
 
-  selectGenres = (artists, tracks) => {
+  selectGenres = (artists, tracks, genreName, genreColor) => {
     this.setState({
       currentArtists: artists,
       currentTracks: tracks,
+      currentGenre: genreName,
+      genreColor,
       clicked: true
     })
   }
@@ -33,20 +36,17 @@ class GenreContainer extends Component {
   renderArtistNames = () => {
     return this.state.currentArtists.map(artist => {
       return (
-        <Fragment>
-          <div key={artist.id} className="artist-box-2 animate-pop-in">
-            <h2>{artist.name}</h2>
-          </div>
-        </Fragment>
+        <div key={artist.id} className="artist-box-2 animate-pop-in">
+          <h2>{artist.name}</h2>
+        </div>
       )
     })
   }
 
   renderTrackNames = () => {
     return this.state.currentTracks.map((track, index) => {
-      console.log("hey cuttie", track)
       return (
-          <div key={track.id} className="track-box animate-pop-in">
+          <div key={track.id} className="track-box animate-pop-in" style={{backgroundColor: this.state.genreColor}}>
             <h3 className="track-name" onClick={() => this.props.setURI(track.spotify_url)}>{index + 1}. {track.name} </h3>
           </div>
       )
@@ -58,6 +58,9 @@ class GenreContainer extends Component {
     return (
       <div id="genre-container">
         <h1> Your collection of genres (from saved tracks) </h1>
+        <div className="selected-genre">
+          <h2 style={{color: this.state.genreColor}}>{this.state.currentGenre ? this.state.currentGenre : null}</h2>
+        </div>
         <Grid>
           {this.state.clicked ?
             <Fragment>

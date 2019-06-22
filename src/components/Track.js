@@ -95,9 +95,10 @@ class Track extends Component {
               <div className="img-description">
                 <h2>{this.props.name} </h2>
                 <p>{this.renderArtistNames()}</p>
-                <Button id="remove-btn" color="black" icon onClick={() => this.props.removeTrack(this.props.spotify_id)}>
-                  <Icon name='minus' />
-                </Button>
+                {this.props.recent_track ? null : <Button id="remove-btn" color="black" icon onClick={() => this.props.removeTrack(this.props.spotify_id)}>
+                    <Icon name='minus' />
+                  </Button>}
+
                 <div className="review-btn-box">
                   <Button inverted color="teal" onClick={this.handleReviewClicked}>Write a review</Button>
                   <Button color="green" icon onClick={() => this.playTrack(this.props.spotify_url)}>

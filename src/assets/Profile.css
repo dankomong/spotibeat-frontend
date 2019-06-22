@@ -12,6 +12,11 @@
   border-radius: 50%;
 }
 
+.polar-data {
+  background-color: white;
+
+}
+
 /* Animations */
 @keyframes pop-in {
   0% {

@@ -7,6 +7,12 @@ class Home extends Component {
     activeItem: this.props.path
   }
 
+  logOut = () => {
+    localStorage.removeItem("token");
+    this.props.removeCurrentUser();
+    this.props.history.push('/login')
+  }
+
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
@@ -64,7 +70,7 @@ class Home extends Component {
           <Menu.Item
             name='logout'
             active={activeItem === 'logout'}
-            onClick={this.handleItemClick}
+            onClick={this.logOut}
           />
         </Menu.Menu>
        </Menu>
@@ -77,6 +83,9 @@ function mapDispatchToProps(dispatch) {
   return {
     handleChange: (val) => {
       dispatch({type: 'SET_SEARCH', payload: val})
+    },
+    removeCurrentUser: () => {
+      dispatch({type: 'REMOVE_USER'})
     }
   }
 }

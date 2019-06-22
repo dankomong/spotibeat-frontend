@@ -16,7 +16,7 @@ class TrackContainer extends Component {
   renderAllTracks = () => {
     return this.props.tracks.map(track => {
 
-      return <Track key={"track" + track.id} img_url={track.album.image_url_medium} {...track} />
+      return <Track key={"track" + track.id} recent_track={false} img_url={track.album.image_url_medium} {...track} />
     })
   }
 
@@ -25,7 +25,7 @@ class TrackContainer extends Component {
       // using index as the key for this one because there can be some recently played tracks
       // that have the same id from the user's saved tracks, resulting in duplicate ids.
       console.log('item', item)
-      return <Track key={"recent-tracks" + index} spotify_url={item.track.external_urls.spotify} recent={true} img_url={item.track.album.images[1].url} artists={item.track.artists} name={item.track.name} />
+      return <Track key={"recent-tracks" + index} recent_track={true} spotify_url={item.track.external_urls.spotify} recent={true} img_url={item.track.album.images[1].url} artists={item.track.artists} name={item.track.name} />
     })
   }
 
@@ -34,7 +34,6 @@ class TrackContainer extends Component {
   // }
 
   handleRenderTracks = (e) => {
-    console.log("eee", e.target.innerText)
     this.setState({
       active: e.target.innerText
     })

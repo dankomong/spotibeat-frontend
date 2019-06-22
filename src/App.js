@@ -157,7 +157,7 @@ class App extends Component {
       <div className="App">
           {this.props.currentUser ?
             <div>
-              <Navbar path={this.props.location.pathname}/>
+              <Navbar path={this.props.location.pathname} history={this.props.history}/>
                 <Switch>
                   {this.state.loading ?
                     <Dimmer active>
@@ -172,7 +172,7 @@ class App extends Component {
             </div> :
             <Route exact path="/login" render={(routerProps) => <Login {...routerProps}/>}/>
           }
-          {this.props.url === "" ? null :<div className="player-container">
+          {this.props.url === "" && this.props.currentUser ? null :<div className="player-container">
             <iframe src={this.props.url.split("/track/").join("/embed/track/")} width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
           </div>}
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Grid } from 'semantic-ui-react'
-import { Bar } from 'react-chartjs-2';
+import { Grid, Button } from 'semantic-ui-react'
+import { Bar, Polar } from 'react-chartjs-2';
 
 class Profile extends Component {
 
@@ -31,48 +31,46 @@ class Profile extends Component {
   }
 
   render() {
-    console.log('profile', this.props)
+    // console.log('profile', this.props)
+    const data = {
+      datasets: [{
+        data: [
+          this.props.currentUser.tracks.length,
+          this.props.genres.length,
+          this.props.artists.length
+        ],
+        backgroundColor: [
+          '#FF6384',
+          '#36A2EB',
+          '#FFCE56'
+        ],
+        label: 'My dataset' // for legend
+      }],
+      labels: [
+        'Tracks',
+        'Genres',
+        'Artists'
+      ]
+    };
     return (
       <div className="profile-content animate-pop-in">
-        <button onClick={this.fetchLibrary}> Update Library </button>
-        <h1>Profile</h1>
-        <a href={this.props.currentUser.spotify_url} target="_blank">
-          <img className="profile-pic" src={this.props.currentUser.profile_img_url} alt="profile pic" />
-        </a>
-        <p>Username: {this.props.currentUser.username} </p>
-        <p>Followers: {this.props.currentUser.followers} </p>
 
-        <Grid columns='three' divided>
+        <Grid>
           <Grid.Row>
-            <Grid.Column>
-              <h1>Tracks</h1>
+            <Grid.Column width={6}>
+              <h1>Profile</h1>
+              <a href={this.props.currentUser.spotify_url} target="_blank">
+                <img className="profile-pic" src={this.props.currentUser.profile_img_url} alt="profile pic" />
+              </a>
+              <h3>Username: {this.props.currentUser.username} </h3>
+              <h3>Followers: {this.props.currentUser.followers} </h3>
+              <Button onClick={this.fetchLibrary}> Update Library </Button>
             </Grid.Column>
-            <Grid.Column>
-              <h1>Artists</h1>
+            <Grid.Column width={10}>
+              <h1>Your Track Statistics</h1>
+              <Polar data={data} />
             </Grid.Column>
-            <Grid.Column>
-              <h1>Genres</h1>
-            </Grid.Column>
-          </Grid.Row>
 
-          <Grid.Row>
-            <Grid.Column>
-              <h1>{this.props.currentUser.tracks.length}</h1>
-            </Grid.Column>
-            <Grid.Column>
-              <h1>{this.props.artists.length}</h1>
-            </Grid.Column>
-            <Grid.Column>
-              <h1>{this.props.genres.length}</h1>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Bar
-              data={this.state.chartData}
-              height={200}
-              width={1}
-              options={{maintainAspectRatio: false}}
-            />
           </Grid.Row>
         </Grid>
       </div>
