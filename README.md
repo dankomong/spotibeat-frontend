@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Check out this demo first [demo](https://youtu.be/tO7-Jc_rGOs)
+Check out this [demo](https://youtu.be/tO7-Jc_rGOs)
 
 ## Spotibeats (back end repo found [here](https://github.com/dankomong/spotibeat-backend))
 - Provides a wide overview based on the user's saved tracks including artists, genres, albums, and recently played tracks.
